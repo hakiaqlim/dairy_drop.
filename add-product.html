@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product - Dairy Drop</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50">
+    <div class="container mx-auto px-4 py-8 max-w-2xl">
+        <h1 class="text-3xl font-bold text-gray-900 mb-6">Add Product to Dairy Drop</h1>
+        
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <form id="productForm" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Product Name</label>
+                    <input type="text" id="name" required 
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        placeholder="e.g., Fresh Milk">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Price ($)</label>
+                    <input type="number" id="price" step="0.01" required 
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        placeholder="e.g., 4.99">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Category</label>
+                    <select id="category" required 
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <option value="">Select a category</option>
+                        <option value="Milk">Milk</option>
+                        <option value="Cheese">Cheese</option>
+                        <option value="Yogurt">Yogurt</option>
+                        <option value="Butter">Butter</option>
+                        <option value="Cream">Cream</option>
+                        <option value="Ice Cream">Ice Cream</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                    <textarea id="description" rows="4" required 
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        placeholder="Describe the product..."></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Image URL</label>
+                    <input type="url" id="image" required 
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        placeholder="https://example.com/image.jpg">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Brand</label>
+                    <input type="text" id="brand" required 
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        placeholder="e.g., Dairy Fresh">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Stock Count</label>
+                    <input type="number" id="countInStock" required 
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        placeholder="e.g., 50">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Admin Token</label>
+                    <input type="text" id="token" required 
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        placeholder="Paste your admin JWT token here">
+                    <p class="text-xs text-gray-500 mt-1">Login as admin and check browser console or localStorage for token</p>
+                </div>
+
+                <button type="submit" 
+                    class="w-full bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition font-semibold">
+                    Add Product
+                </button>
+            </form>
+
+            <div id="message" class="mt-4 hidden"></div>
+        </div>
+
+        <div class="mt-8 bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <h2 class="font-semibold text-blue-900 mb-2">📝 Quick Guide:</h2>
+            <ol class="list-decimal list-inside space-y-1 text-sm text-blue-800">
+                <li>Login to your admin account at <a href="http://localhost:5173/login" class="underline">http://localhost:5173/login</a></li>
+                <li>Open browser DevTools (F12) → Console tab</li>
+                <li>Type: <code class="bg-blue-100 px-1 rounded">localStorage.getItem('user')</code></li>
+                <li>Copy the "token" value and paste it in the form above</li>
+                <li>Fill in the product details and submit!</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('productForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const messageDiv = document.getElementById('message');
+            messageDiv.classList.add('hidden');
+
+            const productData = {
+                name: document.getElementById('name').value,
+                price: parseFloat(document.getElementById('price').value),
+                category: document.getElementById('category').value,
+                description: document.getElementById('description').value,
+                image: document.getElementById('image').value,
+                brand: document.getElementById('brand').value,
+                countInStock: parseInt(document.getElementById('countInStock').value)
+            };
+
+            const token = document.getElementById('token').value;
+
+            try {
+                const response = await fetch('http://localhost:5000/api/products', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(productData)
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    messageDiv.className = 'mt-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg';
+                    messageDiv.textContent = '✅ Product added successfully! Product ID: ' + data._id;
+                    messageDiv.classList.remove('hidden');
+                    document.getElementById('productForm').reset();
+                } else {
+                    messageDiv.className = 'mt-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg';
+                    messageDiv.textContent = '❌ Error: ' + (data.message || 'Failed to add product');
+                    messageDiv.classList.remove('hidden');
+                }
+            } catch (error) {
+                messageDiv.className = 'mt-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg';
+                messageDiv.textContent = '❌ Error: ' + error.message;
+                messageDiv.classList.remove('hidden');
+            }
+        });
+    </script>
+</body>
+</html>
