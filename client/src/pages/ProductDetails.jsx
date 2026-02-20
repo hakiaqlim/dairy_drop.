@@ -16,7 +16,7 @@ const ProductDetails = () => {
     useEffect(() => {
         fetchProduct();
 
-        const socket = io('http://localhost:5000');
+        const socket = io(import.meta.env.VITE_API_URL);
         socket.on('productsUpdated', () => {
             fetchProduct();
         });
@@ -27,7 +27,7 @@ const ProductDetails = () => {
     }, [id]);
 
     const fetchProduct = async () => {
-        const res = await fetch(`http://localhost:5000/api/products/${id}`);
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/products/${id}`);
         const data = await res.json();
         setProduct(data);
     };
@@ -35,7 +35,7 @@ const ProductDetails = () => {
     const submitReviewHandler = async (e) => {
         e.preventDefault();
         try {
-            const res = await fetch(`http://localhost:5000/api/products/${id}/reviews`, {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/products/${id}/reviews`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

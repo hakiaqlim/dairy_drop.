@@ -20,7 +20,7 @@ const Home = () => {
     useEffect(() => {
         fetchProducts();
 
-        const socket = io('http://localhost:5000');
+        const socket = io(import.meta.env.VITE_API_URL);
         socket.on('productsUpdated', () => {
             fetchProducts();
         });
@@ -32,7 +32,7 @@ const Home = () => {
 
     const fetchProducts = async () => {
         try {
-            const res = await fetch('http://localhost:5000/api/products');
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/products`);
             const data = await res.json();
             setProducts(data);
         } catch (error) {
