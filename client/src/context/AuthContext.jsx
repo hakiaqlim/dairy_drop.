@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }) => {
 
     const login = async (email, password) => {
         try {
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/users/login`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://dairy-drop.onrender.com'}/api/users/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -40,7 +40,7 @@ export const AuthProvider = ({ children }) => {
 
     const register = async (name, email, password, phone, address) => {
         try {
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/users`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://dairy-drop.onrender.com'}/api/users`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

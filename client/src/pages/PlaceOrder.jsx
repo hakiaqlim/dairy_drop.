@@ -39,7 +39,7 @@ const PlaceOrder = () => {
 
     const placeOrderHandler = async () => {
         try {
-            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/orders`, {
+            const res = await fetch(`${import.meta.env.VITE_API_URL || 'https://dairy-drop.onrender.com'}/api/orders`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

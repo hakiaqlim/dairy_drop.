@@ -16,7 +16,7 @@ const ProductDetails = () => {
     useEffect(() => {
         fetchProduct();
 
-        const socket = io(import.meta.env.VITE_API_URL);
+        const socket = io(import.meta.env.VITE_API_URL || 'https://dairy-drop.onrender.com');
         socket.on('productsUpdated', () => {
             fetchProduct();
         });
@@ -27,7 +27,7 @@ const ProductDetails = () => {
     }, [id]);
 
     const fetchProduct = async () => {
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/products/${id}`);
+        const res = await fetch(`${import.meta.env.VITE_API_URL || 'https://dairy-drop.onrender.com'}/api/products/${id}`);
         const data = await res.json();
         setProduct(data);
     };
@@ -35,7 +35,7 @@ const ProductDetails = () => {
     const submitReviewHandler = async (e) => {
         e.preventDefault();
         try {
-            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/products/${id}/reviews`, {
+            const res = await fetch(`${import.meta.env.VITE_API_URL || 'https://dairy-drop.onrender.com'}/api/products/${id}/reviews`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

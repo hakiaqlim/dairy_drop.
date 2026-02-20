@@ -20,7 +20,7 @@ const Home = () => {
     useEffect(() => {
         fetchProducts();
 
-        const socket = io(import.meta.env.VITE_API_URL);
+        const socket = io(import.meta.env.VITE_API_URL || 'https://dairy-drop.onrender.com');
         socket.on('productsUpdated', () => {
             fetchProducts();
         });
@@ -32,7 +32,7 @@ const Home = () => {
 
     const fetchProducts = async () => {
         try {
-            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/products`);
+            const res = await fetch(`${import.meta.env.VITE_API_URL || 'https://dairy-drop.onrender.com'}/api/products`);
             const data = await res.json();
             setProducts(data);
         } catch (error) {
