@@ -144,9 +144,9 @@ const Home = () => {
                                 <span className="flex h-2 w-2 rounded-full bg-blue-600"></span>
                                 <span className="text-sm font-semibold text-blue-900 uppercase tracking-wider">100% Fresh Daily</span>
                             </div>
-                            <h1 className="text-5xl lg:text-7xl font-extrabold text-[#1A202C] mb-6 leading-tight">
+                            <h1 className="text-5xl lg:text-6xl font-extrabold text-[#1A202C] mb-6 leading-tight">
                                 Pure Dairy <br />
-                                <span className="text-blue-600 italic">Delivered</span> to You
+                                <span className="text-blue-600 ">Delivered</span> to You
                             </h1>
                             <p className="text-xl text-gray-600 mb-10 leading-relaxed max-w-lg">
                                 Experience the finest, farm-fresh dairy products delivered straight to your doorstep within hours of production.
@@ -161,9 +161,9 @@ const Home = () => {
                             </div>
                         </div>
                         <div className="relative p-4 md:p-0">
-                            <div className="relative z-10 rounded-[3rem] overflow-hidden shadow-2xl transform rotate-2 hover:rotate-0 transition-transform duration-700 aspect-video">
+                            <div className="relative h-2/3 z-10 rounded-[2rem] overflow-hidden shadow-2xl transform rotate-2 hover:rotate-0 transition-transform duration-700 aspect-square">
                                 <img
-                                    src="https://images.unsplash.com/photo-1550583724-125581f7783f?q=80&w=2670&auto=format&fit=crop"
+                                    src="https://images.unsplash.com/photo-1550583724-b2692b85b150?w=400&h=400&fit=crop"
                                     alt="Fresh Dairy"
                                     className="w-full h-full object-cover"
                                 />
